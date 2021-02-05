@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <h1 class="display-4 mt-5">Blogs</h1>
+    </div>
+</div>
+
+<ng-template [ngIf]="pagedBlogResult?.items?.length > 0" [ngIfElse]="noblogs">
+    <div class="container card-columns mt-5 blogs">
+        <app-blog-card *ngFor="let blog of pagedBlogResult.items" [blog]="blog"></app-blog-card>
+    </div>
+</ng-template>
+
+
+<ng-template #noblogs>
+    <div class="mt-4">
+        <div class="d-flex justify-content-center">
+            <h3 class="text-dark">There are no blogs published yet...</h3>
+        </div>
+    </div>
+</ng-template>
+
+<div class="container mt-5" *ngIf="pagedBlogResult?.totalCount > 0">
+    <div class="d-flex justify-content-center">
+       <pagination
+        [boundaryLinks]="true"
+        [maxSize]="10"
+        [itemsPerPage]="6"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;"
+        [totalItems]="pagedBlogResult.totalCount"
+        (pageChanged)="pageChanged($event)"
+       ></pagination>
+    </div>
+</div>
+

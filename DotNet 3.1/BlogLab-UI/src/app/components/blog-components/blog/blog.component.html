@@ -1,0 +1,22 @@
+<div class="container" *ngIf="!!blog">
+
+    <div class="d-flex justify-content-center">
+        <h1 class="display-4 mt-5 text-center">{{blog.title}}</h1>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <h6>Written by {{blog.username}} - {{blog.publishDate | date:'medium'}}
+            <span *ngIf="blog.publishDate !== blog.updateDate"> | Updated on {{blog.updateDate | date:'medium'}}</span>
+        </h6>
+    </div>
+
+    <div class="mt-4">
+        <img src="{{blogPhotoUrl}}" class="blog-image img-fluid text-wrapper">
+        <p class="blog-content">
+            {{blog.content}}
+        </p>
+    </div>
+
+    <app-comment-system *ngIf="blog" [blogId]="blog.blogId"></app-comment-system>
+
+</div>

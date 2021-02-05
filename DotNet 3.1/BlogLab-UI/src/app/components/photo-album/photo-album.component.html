@@ -1,0 +1,97 @@
+<div class="container">
+
+    <div class="d-flex justify-content-center">
+        <h1 class="display-4 mt-5">Photo Album</h1>
+    </div>
+
+    <div class="mt-4" [ngClass]="{'photo-album-empty' : photos.length === 0}">
+
+        <ng-template [ngIf]="photos.length > 0" [ngIfElse]="nophotos">
+
+            <carousel [pauseOnFocus]="true">
+                <slide *ngFor="let photo of photos">
+
+                    <div class="photo-container">
+                        <img src="{{photo.imageUrl}}" class="slide-image">
+                    </div>
+
+                    <div class="carousel-caption mb-3">
+                        <h3>{{photo.description}}</h3>
+
+                        <button class="btn btn-danger mt-3" *ngIf="!photo.deleteConfirm" 
+                            (click)="confirmDelete(photo)">Delete Photo</button>
+                        
+                        <div class="delete-confirmation pl-2 pr-2 mt-3" *ngIf="!!photo.deleteConfirm">
+                            <span class="text-dark">Sure?</span>
+
+                            <button class="btn btn-link p-1"
+                                (click)="deleteConfirmed(photo)">Yes</button>
+                            
+                            <button class="btn btn-link p-1"
+                                (click)="cancelDeleteConfirm(photo)">No</button>
+                        </div>
+
+                    </div>
+
+                </slide>
+            </carousel>
+
+        </ng-template>
+
+        <ng-template #nophotos>
+            <div class="d-flex justify-content-center">
+                <h3 class="text-dark">You don't have any photos yet...</h3>
+            </div>
+        </ng-template>
+
+    </div>
+
+    <form #photoForm="ngForm" (ngSubmit)="onSubmit()" class="mt-4">
+        <div class="row">
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="photoDescription">Photo Description</label>
+                    <input
+                        type="text"
+                        name="photoDescription"
+                        #userPhotoDescription="ngModel"
+                        [(ngModel)]="newPhotoDescription"
+                        [ngClass]="{'is-invalid' : userPhotoDescription.errors && userPhotoDescription.touched}"
+                        class="form-control"
+                        placeholder="Photo Description"
+                        required
+                        minlength="10"
+                        maxlength="30"
+                        >
+
+                    <div *ngIf="!!userPhotoDescription.errors?.required" class="invalid-feedback">
+                        You can't have an empty photo description
+                    </div>
+
+                    <div *ngIf="!!userPhotoDescription.errors?.minlength" class="invalid-feedback">
+                        Must be between 10-30 characters
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8">
+                <div class="form-group">
+                    <label for="file">Add photo to your album</label>
+                    <input 
+                        type="file"
+                        name="photoFile"
+                        #photoUploadElement
+                        (change)="onFileChange($event)" 
+                        class="form-control"
+                        required>
+                    <small class="form-text text-muted" id="fileHelp">Max 10mb size</small>
+                </div>
+
+                <button class="btn btn-primary" [disabled]="!photoFile || !photoForm.valid">
+                    Upload Image
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>

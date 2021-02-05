@@ -1,0 +1,71 @@
+<div class="container">
+
+    <div class="d-flex justify-content-center">
+        <h1 class="display-4 mt-5">Dashboard</h1>
+    </div>
+
+    <ng-template #noblogs>
+
+        <div class="d-flex justify-content-center">
+            <h3 class="text-dark mt-3">You don't have any blogs yet...</h3>
+        </div>
+
+        <button class="btn btn-lg btn-outline-primary mt-4 mb-4" (click)="createBlog()">
+            New Blog
+        </button>
+
+    </ng-template>
+
+    <ng-template [ngIf]="userBlogs.length > 0" [ngIfElse]="noblogs">
+        
+        <button class="btn btn-lg btn-outline-primary mt-4 mb-4" (click)="createBlog()">
+            New Blog
+        </button>
+
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Snippet</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let userBlog of userBlogs">
+                    <td>
+                        {{ userBlog.title | summary:30 }}
+                    </td>
+                    <td>
+                        {{ userBlog.content | summary:90 }}
+                    </td>
+                    <td>
+                        <button class="btn btn-info d-inline mr-1" (click)="editBlog(userBlog.blogId)">
+                            Edit
+                        </button>
+
+                        <button 
+                            *ngIf="!userBlog.deleteConfirm"
+                            class="btn btn-danger d-inline" (click)="confirmDelete(userBlog)">
+                            Delete
+                        </button>
+
+                        <div *ngIf="!!userBlog.deleteConfirm">
+                            Sure?
+                            
+                            <button class="btn btn-link p-1" (click)="deleteConfirmed(userBlog, userBlogs)">
+                                Yes
+                            </button>
+
+                            <button class="btn btn-link p-1" (click)="cancelDeleteConfirm(userBlog)">
+                                No
+                            </button>
+
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </ng-template>
+
+</div>

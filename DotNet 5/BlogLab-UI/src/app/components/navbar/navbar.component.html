@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+
+        <a class="navbar-brand" routerLink='/' routerLinkActive='active'>BlogLab</a>
+
+        <button class="navbar-toggler"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav" id="collapseBasic" [collapse]="isCollapsed">
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink='/blogs' routerLinkActive='active'>Blogs</a>
+                </li>
+
+                <li class="nav-item" *ngIf="!accountService.isLoggedIn()">
+                    <a class="nav-link" routerLink='/login' routerLinkActive='active'>Login</a>
+                </li>
+            </ul>
+
+            <div class="btn-group" dropdown *ngIf="accountService.isLoggedIn()">
+
+                <button 
+                    id="button-animated"
+                    dropdownToggle
+                    type="button"
+                    class="btn btn-primary dropdown-toggle"
+                    aria-controls="dropdown-animated">
+                    Welcome {{ accountService.currentUserValue.username }}! <span class="caret"></span>
+                </button>
+
+                <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu"
+                    aria-labelledby="button-animated">
+                    <li role="menuitem">
+                        <a class="dropdown-item" routerLink='/photo-album'>Photo Album</a>
+                    </li>
+                    <li role="menuitem">
+                        <a class="dropdown-item" routerLink='/dashboard'>Dashboard</a>
+                    </li>
+                    <li role="divider dropdown-divider"></li>
+                    <li role="menuitem">
+                        <a class="dropdown-item" (click)="logout()">Logout</a>
+                    </li>
+                </ul>
+
+            </div>
+                
+        </div>
+
+    </div>
+</nav>

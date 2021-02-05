@@ -1,0 +1,514 @@
+{
+	"info": {
+		"_postman_id": "15e539da-ef23-434d-a762-2add7074f1e4",
+		"name": "BlogLab WebApi",
+		"description": "Simple tests for the API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"BlogLabUser1\",\r\n    \"Password\": \"Password12345\",\r\n    \"Fullname\": \"BlogLab User\",\r\n    \"Email\": \"BlogUser1@outlook.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{WebApi}}/Account/register",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"Account",
+								"register"
+							]
+						},
+						"description": "Allows us to register an account."
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "db5bc001-195c-4521-8f1f-4a4c69f9f1f2",
+								"exec": [
+									"var jsonData = JSON.parse(pm.response.text());\r",
+									"pm.environment.set(\"Token\", jsonData.token);\r",
+									"pm.environment.set(\"NextNewApplicationUserId\", jsonData.applicationUserId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"BlogLabUser1\",\r\n    \"Password\": \"Password12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{WebApi}}/Account/login",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"Account",
+								"login"
+							]
+						},
+						"description": "Allows us to perform a login."
+					},
+					"response": []
+				}
+			],
+			"description": "These endpoints will help us handle account management.",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Blog",
+			"item": [
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "67badabb-f0da-4146-aad6-441cabb1102a",
+								"exec": [
+									"var jsonData = JSON.parse(pm.response.text());\r",
+									"pm.environment.set(\"NextNewBlogId\", jsonData.blogId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"BlogId\": -1,\r\n    \"Title\": \"This is blog title\",\r\n    \"Content\": \"Switching those a evening. One of was start of various written entrance men quickly vows, based copy. As to without. Weary films Parents frequency, hell the harmonics. Most cheek, of problem. He overall to sleepiness and narrow commissaries. Of coming drawers. Magazine of location essay emphasis a rattling on doubting then of discipline or concept than devious that provide the in prior hide necessary at derived to that of have text, a broader been was and notice select advantage of by in from he trumpet and mountains, world real a the their for absolutely go looked yes, evening. A he blind elucidates nonsense, unprofitable for it however, deference among importance, measures all be let the to have no numbered use can escape. Such spread a then percussion by away, a the for of five copy for shall build is heavy of eyes. And out copy which of to frequencies may far oh, that have of arches goat, when their get the your had nonsense, times a in though, best. And, if here, be that noting so sat for concepts will disappointment there, versus on sentences out agency; Would into sort business you queen's and client more shall employed out won't the and of the manipulate creating compared this weather. It of cache building complicated.\",\r\n    \"ImageUrl\": null,\r\n    \"Publicid\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{WebApi}}/Blog",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"Blog"
+							]
+						},
+						"description": "Create a new blog."
+					},
+					"response": []
+				},
+				{
+					"name": "getall",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Page\": 1,\r\n    \"PageSize\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{WebApi}}/Blog",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"Blog"
+							]
+						},
+						"description": "Get all blogs - page by page."
+					},
+					"response": []
+				},
+				{
+					"name": "get {blogId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{WebApi}}/Blog/{{NextNewBlogId}}",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"Blog",
+								"{{NextNewBlogId}}"
+							]
+						},
+						"description": "Get specific blog based on the blogId."
+					},
+					"response": []
+				},
+				{
+					"name": "get {applicationUserId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{WebApi}}/Blog/user/{{NextNewApplicationUserId}}",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"Blog",
+								"user",
+								"{{NextNewApplicationUserId}}"
+							]
+						},
+						"description": "Get all of user's blogs."
+					},
+					"response": []
+				},
+				{
+					"name": "getallfamous",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Page\": 1,\r\n    \"PageSize\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{WebApi}}/Blog/famous",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"Blog",
+								"famous"
+							]
+						},
+						"description": "Get most talked about blogs - 1 or more comments."
+					},
+					"response": []
+				},
+				{
+					"name": "delete {blogId}",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Page\": 1,\r\n    \"PageSize\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{WebApi}}/Blog/{{NextNewBlogId}}",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"Blog",
+								"{{NextNewBlogId}}"
+							]
+						},
+						"description": "Delete an existing blog."
+					},
+					"response": []
+				}
+			],
+			"description": "These endpoints will help us handle blog related requests.",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "BlogComment",
+			"item": [
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b9db63ae-3d74-443b-9ae0-790346142dd1",
+								"exec": [
+									"var jsonData = JSON.parse(pm.response.text());\r",
+									"pm.environment.set(\"NextNewBlogCommentId\", jsonData.blogCommentId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"BlogCommentId\": -1,\r\n    \"BlogId\": {{NextNewBlogId}},\r\n    \"Content\": \"Know itch horses for choose question reedy, big might the lots past in is who display pursuit why her, clock, at clarinet what run hope blind a much be he kicked nowhere most was home.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{WebApi}}/BlogComment",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"BlogComment"
+							]
+						},
+						"description": "Create a new blog comment."
+					},
+					"response": []
+				},
+				{
+					"name": "get {blogId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{WebApi}}/BlogComment/{{NextNewBlogId}}",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"BlogComment",
+								"{{NextNewBlogId}}"
+							]
+						},
+						"description": "Get all comments for a specific blog."
+					},
+					"response": []
+				},
+				{
+					"name": "delete {blogCommentId}",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token}}"
+							}
+						],
+						"url": {
+							"raw": "{{WebApi}}/BlogComment/{{NextNewBlogCommentId}}",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"BlogComment",
+								"{{NextNewBlogCommentId}}"
+							]
+						},
+						"description": "Delete a specific blog comment."
+					},
+					"response": []
+				}
+			],
+			"description": "These endpoints will help us handle blog comment related requests.",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Photo",
+			"item": [
+				{
+					"name": "uploadphoto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ef1c031-c24d-4590-8983-397eb4d452db",
+								"exec": [
+									"var jsonData = JSON.parse(pm.response.text());\r",
+									"pm.environment.set(\"NextNewPhotoId\", jsonData.photoId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{WebApi}}/Photo",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"Photo"
+							]
+						},
+						"description": "Upload a new photo."
+					},
+					"response": []
+				},
+				{
+					"name": "get {blogId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{WebApi}}/Photo/{{NextNewPhotoId}}",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"Photo",
+								"{{NextNewPhotoId}}"
+							]
+						},
+						"description": "Get back a specific photo."
+					},
+					"response": []
+				},
+				{
+					"name": "delete {photoId}",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{WebApi}}/Photo/{{NextNewPhotoId}}",
+							"host": [
+								"{{WebApi}}"
+							],
+							"path": [
+								"Photo",
+								"{{NextNewPhotoId}}"
+							]
+						},
+						"description": "Delete a specific photo."
+					},
+					"response": []
+				}
+			],
+			"description": "These endpoints will help us handle photo related requests.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5129a6a7-a7ed-4344-930b-650d6a35bee0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb008453-2e23-410b-8642-7058252f3c9d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "404b8ff8-1ca8-45e8-a003-cdaf86aa5071",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "646fa9e2-a18e-440c-9be6-9408855d22e6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

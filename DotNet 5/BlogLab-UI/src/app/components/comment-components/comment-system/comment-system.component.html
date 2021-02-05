@@ -1,0 +1,11 @@
+<div *ngIf="accountService.isLoggedIn() && !!standAloneComment">
+
+    <div class="mb-3">
+        <app-comment-box
+            [comment]="standAloneComment"
+            (commentSaved)="onCommentSaved($event)"></app-comment-box>
+    </div>
+
+</div>
+
+<app-comments [comments]="blogCommentViewModels" *ngIf="!!blogCommentViewModels"></app-comments>

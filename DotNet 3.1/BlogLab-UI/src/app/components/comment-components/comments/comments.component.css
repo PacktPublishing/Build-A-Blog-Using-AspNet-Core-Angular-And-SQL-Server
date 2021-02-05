@@ -1,0 +1,11 @@
+.button-box {
+    text-align: left;
+}
+
+.card {
+    border: none;
+}
+
+.comment-box {
+    border-left: 1px solid rgba(0,0,0,.125);
+}

@@ -1,0 +1,55 @@
+<div class="container">
+
+    <div *ngFor="let comment of comments">
+
+        <div class="row mb-3 d-block comment-box">
+
+            <div class="card p-3">
+
+                <p class="font-italic">{{comment.username}} said on {{comment.updateDate | date:'medium'}}</p>
+
+                <blockquote *ngIf="!comment.isEditable && !comment.isReplying" class="blockquote">
+                    {{comment.content}}
+                </blockquote>
+
+                <app-comment-box
+                    *ngIf="(!!comment.isEditable && accountService.givenUserIsLoggedIn(comment.username)) || !!comment.isReplying"
+                    [comment]="comment"
+                    (commentSaved)="onCommentSaved($event, comment)"
+                    >    
+                </app-comment-box>
+
+                <div class="button-box" *ngIf="!comment.isEditable && !comment.isReplying">
+
+                    <button 
+                        *ngIf="!comment.isEditable && !!accountService.givenUserIsLoggedIn(comment.username)" 
+                        class="btn btn-sm btn-info mr-1"
+                        (click)="editComment(comment)">Edit</button>
+                    
+                    <button 
+                        *ngIf="!comment.isReplying && !!accountService.isLoggedIn()" 
+                        class="btn btn-sm btn-primary mr-1"
+                        (click)="replyComment(comment)">Reply</button>
+
+                    <button 
+                        *ngIf="!comment.deleteConfirm && !!accountService.givenUserIsLoggedIn(comment.username)" 
+                        class="btn btn-sm btn-danger"
+                        (click)="showDeleteConfirm(comment)">Delete</button>
+
+                    <div *ngIf="!!comment.deleteConfirm">
+                        Sure?
+                        <button class="btn btn-link p-1" (click)="deleteConfirm(comment, comments)">Yes</button>
+                        <button class="btn btn-link p-1" (click)="cancelDeleteConfirm(comment)">No</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <app-comments [comments]="comment.comments" *ngIf="comment.comments"></app-comments>
+
+    </div>
+
+</div>

@@ -1,0 +1,17 @@
+<div class="card">
+    <img *ngIf="!!blogPhotoUrl" class="card-img-top img-fluid" src="{{blogPhotoUrl}}">
+    <div class="card-body">
+        <h4 class="card-title">
+            {{blog.title}}
+        </h4>
+
+        <p class="card-text" *ngIf="!!blogPhotoUrl">{{blog.content | summary:100}}</p>
+
+        <p class="card-text" *ngIf="!blogPhotoUrl">{{blog.content | summary:300}}</p>
+
+        <button class="btn btn-xs bg-primary text-light" (click)="readMore(blog.blogId)">
+            Read More
+        </button>
+
+    </div>
+</div>

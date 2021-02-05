@@ -1,0 +1,19 @@
+.blog-image {
+    border-radius: 5px;
+}
+
+.blog-content {
+    white-space: pre-line;
+}
+
+.text-wrapper {
+    float: left;
+    margin: 0 0 1em 0;
+}
+
+@media (min-width: 576px) {
+    .text-wrapper {
+        float: left;
+        margin: 0 1em 0 0;
+    }
+}

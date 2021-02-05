@@ -1,0 +1,85 @@
+<div class="container">
+
+    <div class="d-flex justify-content-center">
+        <h1 class="display-4 mt-5">{{ isNew() ? 'Create' : 'Edit' }} Blog</h1>
+    </div>
+
+    <a *ngIf="!isNew()" routerLink="/blogs/{{blogForm.get('blogId').value}}"
+        class="badge badge-primary mb-2 p-2">
+        Preview Blog
+    </a>
+
+    <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <label for="photo">Photo</label>
+
+            <input
+                formControlName="photoDescription"
+                [typeahead]="userPhotos"
+                typeaheadOptionField="description"
+                [typeaheadScrollable]="true"
+                [typeaheadOptionsInScrollableView]="5"
+                (typeaheadOnSelect)="onSelect($event)"
+                placeholder="Choose optional photo"
+                class="form-control form-control-lg"
+                id="photo">
+        </div>
+
+        <div class="form-group">
+
+            <label for="title">Title</label>
+
+            <input
+                type="text"
+                [ngClass]="{'is-invalid' : hasErrors('title') && isTouched('title'),
+                            'is-valid' : !hasErrors('title') && isTouched('title')}"
+                class="form-control form-control-lg"
+                formControlName="title"
+                placeholder="Write a catchy title"
+                id="title">
+
+            <div *ngIf="hasError('title', 'required')" class="invalid-feedback">
+                Title is required
+            </div>
+
+            <div *ngIf="hasError('title', 'minlength') || hasError('title', 'maxlength')" 
+                class="invalid-feedback">
+                Must be between 10-50 characters
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <label for="content">Content</label>
+
+            <textarea
+                [ngClass]="{'is-invalid' : hasErrors('content') && isTouched('content'),
+                            'is-valid' : !hasErrors('content') && isTouched('content')}"
+                class="form-control form-control-lg"
+                formControlName="content"
+                id="content"
+                rows="20"></textarea>
+
+            <div *ngIf="hasError('content', 'required')" class="invalid-feedback">
+                Content is required
+            </div>
+
+            <div *ngIf="hasError('content', 'minlength') || hasError('content', 'maxlength')" 
+                class="invalid-feedback">
+                Must be between 300-5000 characters
+            </div>
+        </div>
+
+        <button class="btn bg-primary text-light mr-2" [disabled]="!blogForm.valid && !!blogForm.pristine">
+            Save
+        </button>
+
+        <button class="btn btn-danger text-light" *ngIf="!!getPhoto(blogForm.get('photoId').value)"
+            (click)="detachPhoto()">
+            Detach Photo
+        </button>
+
+    </form>
+
+</div>
