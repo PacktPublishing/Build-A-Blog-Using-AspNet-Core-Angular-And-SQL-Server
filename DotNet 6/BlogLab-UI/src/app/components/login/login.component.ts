@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApplicationUserLogin } from 'src/app/models/account/application-user-login.model';
 import { AccountService } from 'src/app/services/account.service';
@@ -11,12 +11,12 @@ import { AccountService } from 'src/app/services/account.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: UntypedFormGroup;
+  loginForm: FormGroup;
 
   constructor(
     private accountService: AccountService,
     private router: Router,
-    private formBuilder: UntypedFormBuilder
+    private formBuilder: FormBuilder
   ) { 
 
     if (this.accountService.isLoggedIn()) {

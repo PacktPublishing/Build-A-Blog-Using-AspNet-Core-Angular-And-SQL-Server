@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApplicationUserCreate } from 'src/app/models/account/application-user-create.model';
 import { AccountService } from 'src/app/services/account.service';
@@ -11,12 +11,12 @@ import { AccountService } from 'src/app/services/account.service';
 })
 export class RegisterComponent implements OnInit {
 
-  registerForm: UntypedFormGroup;
+  registerForm: FormGroup;
 
   constructor(
     private accountService: AccountService,
     private router: Router,
-    private formBuilder: UntypedFormBuilder
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit {
     return !!this.registerForm.get(field).hasError(error);
   }
 
-  matchValue: ValidatorFn = (fg: UntypedFormGroup) => {
+  matchValue: ValidatorFn = (fg: FormGroup) => {
     const password = fg.get('password').value;
     const confirmPassword = fg.get('confirmPassword').value;
     return password === confirmPassword ? null : { isMatching: true };
