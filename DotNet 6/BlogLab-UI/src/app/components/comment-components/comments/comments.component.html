@@ -23,12 +23,12 @@
 
                     <button 
                         *ngIf="!comment.isEditable && !!accountService.givenUserIsLoggedIn(comment.username)" 
-                        class="btn btn-sm btn-info mr-1"
+                        class="btn btn-sm btn-info me-1"
                         (click)="editComment(comment)">Edit</button>
                     
                     <button 
                         *ngIf="!comment.isReplying && !!accountService.isLoggedIn()" 
-                        class="btn btn-sm btn-primary mr-1"
+                        class="btn btn-sm btn-primary me-1"
                         (click)="replyComment(comment)">Reply</button>
 
                     <button 
