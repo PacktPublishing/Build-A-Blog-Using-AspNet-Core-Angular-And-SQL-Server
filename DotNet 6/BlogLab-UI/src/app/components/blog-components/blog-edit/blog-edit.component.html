@@ -5,13 +5,13 @@
     </div>
 
     <a *ngIf="!isNew()" routerLink="/blogs/{{blogForm.get('blogId').value}}"
-        class="badge badge-primary mb-2 p-2">
+        class="badge rounded-pill bg-primary text-light mb-2 p-2">
         Preview Blog
     </a>
 
     <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="photo">Photo</label>
 
             <input
@@ -26,7 +26,7 @@
                 id="photo">
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
 
             <label for="title">Title</label>
 
@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
 
             <label for="content">Content</label>
 
@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <button class="btn bg-primary text-light mr-2" [disabled]="!blogForm.valid && !!blogForm.pristine">
+        <button class="btn bg-primary text-light me-2" [disabled]="!blogForm.valid && !!blogForm.pristine">
             Save
         </button>
 

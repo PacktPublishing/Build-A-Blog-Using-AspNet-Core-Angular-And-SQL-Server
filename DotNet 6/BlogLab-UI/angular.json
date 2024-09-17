@@ -138,7 +138,5 @@
       }
     }
   },
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "BlogLab-UI"
 }

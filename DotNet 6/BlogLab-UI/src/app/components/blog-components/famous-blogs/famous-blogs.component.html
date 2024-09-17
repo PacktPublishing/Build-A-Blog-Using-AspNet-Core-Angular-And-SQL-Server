@@ -5,9 +5,12 @@
 </div>
 
 <ng-template [ngIf]="famousBlogs?.length > 0" [ngIfElse]="noblogs">
-    <div class="container card-columns mt-5">
-        <app-blog-card *ngFor="let famousBlog of famousBlogs"
-            [blog]="famousBlog"></app-blog-card>
+    <div class="container mt-5">
+        <div class="row row-cols-sm-1 row-cols-md-3 g-5">
+            <div class="col" *ngFor="let famousBlog of famousBlogs">
+                <app-blog-card [blog]="famousBlog"></app-blog-card>
+            </div>
+        </div>
     </div>
 </ng-template>
 

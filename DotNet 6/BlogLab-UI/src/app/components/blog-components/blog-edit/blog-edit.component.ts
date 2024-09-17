@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 import { ToastrService } from 'ngx-toastr';
@@ -16,13 +16,13 @@ import { PhotoService } from 'src/app/services/photo.service';
 })
 export class BlogEditComponent implements OnInit {
 
-  blogForm: UntypedFormGroup;
+  blogForm: FormGroup;
   confirmImageDelete: boolean = false;
   userPhotos: Photo[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     private blogService: BlogService,
     private photoService: PhotoService,
     private toastr: ToastrService,

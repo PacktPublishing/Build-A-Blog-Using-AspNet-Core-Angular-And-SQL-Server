@@ -3,7 +3,7 @@
 
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-    <div class="form-group">
+    <div class="mb-3">
         <input
             type="text"
             [ngClass]="{'is-invalid' : hasErrors('fullname') && isTouched('fullname'),
@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
         <input
             type="text"
             [ngClass]="{'is-invalid' : hasErrors('username') && isTouched('username'),
@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
         <input
             type="text"
             [ngClass]="{'is-invalid' : hasErrors('email') && isTouched('email'),
@@ -57,7 +57,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
         <input
             type="password"
             [ngClass]="{'is-invalid' : hasErrors('password') && isTouched('password'),
@@ -75,7 +75,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
         <input
             type="password"
             [ngClass]="{'is-invalid' : 
